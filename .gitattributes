@@ -1,0 +1,6 @@
+*.aar filter=lfs diff=lfs merge=lfs -text
+libmediapipe_c.dylib filter=lfs diff=lfs merge=lfs -text
+Packages/com.github/homuler.mediapipe/** filter=lfs diff=lfs merge=lfs -text
+Packages/com.github.homuler.mediapipe/Runtime/Plugins/iOS/MediaPipeUnity..framework/MediaPipeUnity filter=lfs diff=lfs merge=lfs -text
+Packages/com.github.homuler.mediapipe/Runtime/Plugins/iOS/MediaPipeUnity/framework/MediaPipeUnity filter=lfs diff=lfs merge=lfs -text
+Packages/com.github.homuler.mediapipe/Runtime/Plugins/iOS/MediaPipeUnity.framework/MediaPipeUnity filter=lfs diff=lfs merge=lfs -text
