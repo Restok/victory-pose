@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class IKTargetController : MonoBehaviour
 {
-    [SerializeField] private float maxVelocity = 1;
+    [SerializeField] private float maxVelocity = 2;
     private Vector2 nosePos;
 
     private Rigidbody rigidbody;
@@ -25,7 +25,6 @@ public class IKTargetController : MonoBehaviour
         }
     }
     private void Update() {
-        print(movementVelocity);
         rigidbody.velocity = movementVelocity;
     }
     private void setLocomotionState(NormalizedLandmark headPos) {
@@ -33,7 +32,6 @@ public class IKTargetController : MonoBehaviour
         int movingRight = 0;
         if(headPos.Y > .7f) {
             movingForward = -1;
-            print("movingBack");
         }
         else if (headPos.Y < 0.3f) {
             movingForward = 1;

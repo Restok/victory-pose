@@ -12,6 +12,8 @@ namespace Mediapipe.Unity.PoseTracking
   public class PoseTrackingSolution : ImageSourceSolution<PoseTrackingGraph>
   {
     [SerializeField] private PoseLandmarkListAnnotationController _poseLandmarksAnnotationController;
+    [SerializeField] private PlayerMovementController PlayerMovementController;
+
     [SerializeField] private IKTargetController IKTargetController;
     public PoseTrackingGraph.ModelComplexity modelComplexity
     {
@@ -92,7 +94,8 @@ namespace Mediapipe.Unity.PoseTracking
 
     private void OnPoseLandmarksOutput(object stream, OutputEventArgs<NormalizedLandmarkList> eventArgs)
     {
-      IKTargetController.setPoseLandmark(eventArgs.value);
+      //IKTargetController.setPoseLandmark(eventArgs.value);
+      PlayerMovementController.setPoseLandmark(eventArgs.value);
       _poseLandmarksAnnotationController.DrawLater(eventArgs.value);
     }
   }
