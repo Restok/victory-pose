@@ -65,12 +65,15 @@ public class PlayerMovementController : MonoBehaviour
         forward = transform.forward;
         right = transform.right;
         
-        float forwardVelocity = movingForward * multiplier * Math.Abs(headPos.Y - 0.5f)*2.2f;
-        float rightVelocity = movingRight * multiplier * Math.Abs(headPos.X - 0.5f)*2.2f;
+        // float forwardVelocity = movingForward * multiplier * Math.Abs(headPos.Y - 0.5f)*2.2f;
+        // float rightVelocity = movingRight * multiplier * Math.Abs(headPos.X - 0.5f)*2.2f;
+        float forwardVelocity = movingForward * multiplier;
+        float rightVelocity = movingRight * multiplier;
         anim.SetFloat("LeftRightVelocity", rightVelocity);
         anim.SetFloat("ForwardBackwardVelocity", forwardVelocity);
         movementVelocity = Vector3.Normalize(forwardVelocity * forward + right*rightVelocity);        
-        movementVelocity *= Math.Max(Math.Abs(forwardVelocity), Math.Abs(rightVelocity));        
+        //movementVelocity *= Math.Max(Math.Abs(forwardVelocity), Math.Abs(rightVelocity));        
+        movementVelocity *= maxVelocity;
         characterController.SimpleMove(movementVelocity);
     }
     
@@ -87,7 +90,7 @@ public class PlayerMovementController : MonoBehaviour
         
         float handX = handToMiddle.x * 2.1f * -maxOffsetFromCenterX;
         float handY = handToMiddle.y * 2.1f * -maxOffsetFromCenterY;
-        float handZ = (Math.Abs(Math.Abs(handToMiddle.x)-0.8f))*(Math.Abs(handToMiddle.y - 0.5f))*4;
+        float handZ = (Math.Abs(Math.Abs(handToMiddle.x)-0.8f))*(Math.Abs(Math.Abs(handToMiddle.y)- 0.5f))*4;
         return new Vector3(handX, handY, handZ);    
         }
 }

@@ -14,7 +14,6 @@ namespace Mediapipe.Unity.PoseTracking
     [SerializeField] private PoseLandmarkListAnnotationController _poseLandmarksAnnotationController;
     [SerializeField] private PlayerMovementController PlayerMovementController;
 
-    [SerializeField] private IKTargetController IKTargetController;
     public PoseTrackingGraph.ModelComplexity modelComplexity
     {
       get => graphRunner.modelComplexity;
