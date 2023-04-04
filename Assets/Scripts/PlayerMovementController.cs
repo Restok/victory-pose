@@ -1,8 +1,11 @@
 using System;
+using Cinemachine;
 using Mediapipe;
+using Mediapipe.Unity.PoseTracking;
+using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerMovementController : MonoBehaviour
+public class PlayerMovementController : NetworkBehaviour
 {
     [SerializeField] private float maxVelocity = 2.5f;
     private Vector2 nosePos;
@@ -18,12 +21,36 @@ public class PlayerMovementController : MonoBehaviour
     private float maxOffsetFromCenterY = 1f;
     [SerializeField] private Transform leftHandTarget;
     [SerializeField] private Transform rightHandTarget;
+    [SerializeField] private Transform playerHead;
     private Vector2 middleShoulderPos;
+    private CinemachineVirtualCamera _cinemachineVirtualCamera;
+    private GameObject _mainCamera;
+    private PoseTrackingSolution _poseTrackingSolution;
+    private void Awake(){
+        if (_mainCamera == null) {
+            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        }
+        if(_cinemachineVirtualCamera == null){
+            _cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
+        }
+        if(_poseTrackingSolution == null){
+            _poseTrackingSolution = FindObjectOfType<PoseTrackingSolution>();
+        }
+
+    }
     private void Start(){
         characterController = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
     }
-
+    public override void OnNetworkSpawn(){
+        base.OnNetworkSpawn();
+        if (IsClient && IsOwner) {
+            _cinemachineVirtualCamera.Follow = transform;
+            _cinemachineVirtualCamera.LookAt = playerHead;
+            _poseTrackingSolution.PlayerMovementController = GetComponent<PlayerMovementController>();
+            _poseTrackingSolution.enabled = true;
+        }
+    }
     internal void setPoseLandmark(NormalizedLandmarkList poseLandmarks)
     {
         if(poseLandmarks!= null) {
@@ -36,10 +63,12 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
     private void Update() {
-        if(headPos!= null){
-            setLocomotionState();
-            setArmState();
-            
+        if(IsOwner){
+            if(headPos!= null){
+                setLocomotionState();
+                setArmState();
+                        
+            }
         }
     }
     private void setLocomotionState() {
