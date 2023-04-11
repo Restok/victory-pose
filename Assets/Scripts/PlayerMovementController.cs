@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerMovementController : NetworkBehaviour
 {
     [SerializeField] private float maxVelocity = 2.5f;
+    private InterpolatingFloat currentVelocity = new InterpolatingFloat(0,0, 0.05f);
     private Vector2 nosePos;
     private Animator anim;
     private Vector3 movementVelocity = new Vector3();
@@ -26,6 +27,21 @@ public class PlayerMovementController : NetworkBehaviour
     private CinemachineVirtualCamera _cinemachineVirtualCamera;
     private GameObject _mainCamera;
     private PoseTrackingSolution _poseTrackingSolution;
+    private class InterpolatingFloat {
+        public float currentValue {get;set;}
+        public float targetValue {get;set;}
+        public float rate {get;set;}
+
+        public InterpolatingFloat(float currentValue, float targetValue, float rate=0.3f)
+        {
+            this.currentValue = currentValue;
+            this.targetValue = targetValue;
+            this.rate = rate;
+        }
+        public void UpdateVariable(){
+            this.currentValue += (this.targetValue-this.currentValue)*rate;
+        }
+    }
     private void Awake(){
         if (_mainCamera == null) {
             _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -62,19 +78,22 @@ public class PlayerMovementController : NetworkBehaviour
             (poseLandmarks.Landmark[11].Y + poseLandmarks.Landmark[12].Y)/2);
         }
     }
+    private void getRotation() {
+
+    }
     private void Update() {
         if(IsOwner){
+            currentVelocity.UpdateVariable();
             if(headPos!= null){
                 setLocomotionState();
                 setArmState();
-                        
             }
         }
     }
     private void setLocomotionState() {
         int movingForward = 0;
         int movingRight = 0;
-        if(headPos.Y > .7f) {
+        if(headPos.Y > .75f) {
             movingForward = -1;
         }
         else if (headPos.Y < 0.3f) {
@@ -86,6 +105,7 @@ public class PlayerMovementController : NetworkBehaviour
         else if(headPos.X < 0.3f){
             movingRight = 1;
         }
+
         int numDirections = Math.Abs(movingForward) + Math.Abs(movingRight);
         float multiplier = maxVelocity;
         if(numDirections == 2) {
@@ -93,16 +113,13 @@ public class PlayerMovementController : NetworkBehaviour
         }
         forward = transform.forward;
         right = transform.right;
-        
-        // float forwardVelocity = movingForward * multiplier * Math.Abs(headPos.Y - 0.5f)*2.2f;
-        // float rightVelocity = movingRight * multiplier * Math.Abs(headPos.X - 0.5f)*2.2f;
         float forwardVelocity = movingForward * multiplier;
         float rightVelocity = movingRight * multiplier;
         anim.SetFloat("LeftRightVelocity", rightVelocity);
         anim.SetFloat("ForwardBackwardVelocity", forwardVelocity);
+        currentVelocity.targetValue = maxVelocity;
         movementVelocity = Vector3.Normalize(forwardVelocity * forward + right*rightVelocity);        
-        //movementVelocity *= Math.Max(Math.Abs(forwardVelocity), Math.Abs(rightVelocity));        
-        movementVelocity *= maxVelocity;
+        movementVelocity *= currentVelocity.currentValue;
         characterController.SimpleMove(movementVelocity);
     }
     
@@ -110,8 +127,8 @@ public class PlayerMovementController : NetworkBehaviour
         if(leftHandPos.X < rightHandPos.X) {
             (leftHandPos, rightHandPos) = (rightHandPos, leftHandPos);
         }
-        leftHandTarget.localPosition = getIKHandPosition(leftHandPos);
-        rightHandTarget.localPosition = getIKHandPosition(rightHandPos);
+        leftHandTarget.localPosition = Vector3.Lerp(leftHandTarget.localPosition,getIKHandPosition(leftHandPos), 0.3f);
+        rightHandTarget.localPosition = Vector3.Lerp(rightHandTarget.localPosition,getIKHandPosition(rightHandPos), 0.3f);
         
     }
     private Vector3 getIKHandPosition(NormalizedLandmark handPos) {
