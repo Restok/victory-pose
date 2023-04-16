@@ -18,12 +18,13 @@ public class PlayerMovementController : NetworkBehaviour
     private NormalizedLandmark headPos;
     private NormalizedLandmark leftHandPos;
     private NormalizedLandmark rightHandPos;
+    private Vector2 middleShoulderPos;
+
     private float maxOffsetFromCenterX = 1.67f;
     private float maxOffsetFromCenterY = 1f;
     [SerializeField] private Transform leftHandTarget;
     [SerializeField] private Transform rightHandTarget;
     [SerializeField] private Transform playerHead;
-    private Vector2 middleShoulderPos;
     private CinemachineVirtualCamera _cinemachineVirtualCamera;
     private GameObject _mainCamera;
     private PoseTrackingSolution _poseTrackingSolution;
@@ -78,18 +79,19 @@ public class PlayerMovementController : NetworkBehaviour
             (poseLandmarks.Landmark[11].Y + poseLandmarks.Landmark[12].Y)/2);
         }
     }
-    private void getRotation() {
 
-    }
     private void Update() {
-        if(IsOwner){
-            currentVelocity.UpdateVariable();
-            if(headPos!= null){
-                setLocomotionState();
-                setArmState();
-            }
+        if(!IsOwner) {
+            return;
         }
-    }
+        currentVelocity.UpdateVariable();
+        if(headPos!= null){
+            setLocomotionState();
+        }
+        if(leftHandPos!=null){
+            setArmState();
+        }
+}
     private void setLocomotionState() {
         int movingForward = 0;
         int movingRight = 0;
@@ -120,24 +122,33 @@ public class PlayerMovementController : NetworkBehaviour
         currentVelocity.targetValue = maxVelocity;
         movementVelocity = Vector3.Normalize(forwardVelocity * forward + right*rightVelocity);        
         movementVelocity *= currentVelocity.currentValue;
-        characterController.SimpleMove(movementVelocity);
+        movePlayerServerRPC(movementVelocity);
     }
     
     private void setArmState(){
         if(leftHandPos.X < rightHandPos.X) {
             (leftHandPos, rightHandPos) = (rightHandPos, leftHandPos);
         }
-        leftHandTarget.localPosition = Vector3.Lerp(leftHandTarget.localPosition,getIKHandPosition(leftHandPos), 0.3f);
-        rightHandTarget.localPosition = Vector3.Lerp(rightHandTarget.localPosition,getIKHandPosition(rightHandPos), 0.3f);
+        Vector3 leftHandTargetPos = Vector3.Lerp(leftHandTarget.localPosition,getIKHandPosition(leftHandPos), 0.3f);
+        Vector3 rightHandTargetPos = Vector3.Lerp(rightHandTarget.localPosition,getIKHandPosition(rightHandPos), 0.3f);
+        movePlayerArmServerRPC(leftHandTargetPos, rightHandTargetPos);
         
     }
     private Vector3 getIKHandPosition(NormalizedLandmark handPos) {
         Vector2 handToMiddle = new Vector2((float) Math.Clamp(handPos.X - middleShoulderPos.x, -0.5, 0.5), (float) Math.Clamp(handPos.Y - middleShoulderPos.y, -0.5, 0.5));
-        
         float handX = handToMiddle.x * 2.1f * -maxOffsetFromCenterX;
         float handY = handToMiddle.y * 2.1f * -maxOffsetFromCenterY;
         float handZ = (Math.Abs(Math.Abs(handToMiddle.x)-0.8f))*(Math.Abs(Math.Abs(handToMiddle.y)- 0.5f))*4;
         return new Vector3(handX, handY, handZ);    
-        }
+    }
+    [ServerRpc]
+    private void movePlayerServerRPC(Vector3 movementVelocity){
+        characterController.SimpleMove(movementVelocity);
+    }
+    [ServerRpc]
+    private void movePlayerArmServerRPC(Vector3 left, Vector3 right){
+        leftHandTarget.localPosition = left;
+        rightHandTarget.localPosition = right;
+    }
 }
 

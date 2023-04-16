@@ -5,11 +5,12 @@
 // https://opensource.org/licenses/MIT.
 
 using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Mediapipe.Unity
 {
-  public abstract class Solution : MonoBehaviour
+  public abstract class Solution : NetworkBehaviour
   {
 #pragma warning disable IDE1006
     // TODO: make it static

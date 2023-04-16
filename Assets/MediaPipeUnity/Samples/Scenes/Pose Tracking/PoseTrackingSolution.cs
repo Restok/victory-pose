@@ -78,7 +78,7 @@ namespace Mediapipe.Unity.PoseTracking
       LandmarkList poseWorldLandmarks = null;
       ImageFrame segmentationMask = null;
       NormalizedRect roiFromLandmarks = null;
-
+    
       if (runningMode == RunningMode.Sync)
       {
         var _ = graphRunner.TryGetNext(out poseDetection, out poseLandmarks, out poseWorldLandmarks, out segmentationMask, out roiFromLandmarks, true);
