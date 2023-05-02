@@ -57,11 +57,6 @@ namespace RootMotion.Dynamics {
 		protected override void OnFixedUpdate(float deltaTime) {
 			// Everything happening in the fixed time step.
 
-			// Example of using PuppetEvents
-			if (centerOfMass.angle > loseBalanceAngle) {
-				// If the angle between Vector3.up and the vector from the center of pressure to the center of mass > loseBalanceangle, lose balance (maybe switch to another behaviour).
-				onLoseBalance.Trigger(puppetMaster);
-			}
 		}
 
 		protected override void OnLateUpdate(float deltaTime) {
@@ -77,7 +72,7 @@ namespace RootMotion.Dynamics {
 
 		protected override void OnMuscleCollisionBehaviour(MuscleCollision m) {
 			if (!enabled) return;
-
+			
 			// If the muscle has collided with something that is on the PuppetMaster's collision layers.
 		}
 	}

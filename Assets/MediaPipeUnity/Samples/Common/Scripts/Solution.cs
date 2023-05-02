@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Mediapipe.Unity
 {
-  public abstract class Solution : NetworkBehaviour
+  public abstract class Solution : MonoBehaviour
   {
 #pragma warning disable IDE1006
     // TODO: make it static

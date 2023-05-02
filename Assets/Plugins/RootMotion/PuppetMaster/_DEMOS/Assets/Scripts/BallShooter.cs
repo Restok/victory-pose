@@ -9,8 +9,8 @@ namespace RootMotion.Demos {
 		public KeyCode keyCode = KeyCode.Mouse0;
 		public GameObject ball;
 		public Vector3 spawnOffset = new Vector3(0f, 0.5f, 0f);
-		public Vector3 force = new Vector3(0f, 0f, 7f);
-		public float mass = 3f;
+		public Vector3 force = new Vector3(0f, 0f, 10f);
+		public float mass = 100f;
 
 		void Update () {
 			if (Input.GetKeyDown(keyCode)) {

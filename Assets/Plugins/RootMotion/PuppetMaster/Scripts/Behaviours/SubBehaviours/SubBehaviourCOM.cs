@@ -109,7 +109,7 @@ namespace RootMotion.Dynamics {
 
 			// Calculate COM direction, rotation and angle
 			direction = position - centerOfPressure;
-			rotation = Quaternion.FromToRotation(Vector3.up, direction);
+			//rotation = Quaternion.FromToRotation(Vector3.up, direction);
 			inverseRotation = Quaternion.Inverse(rotation);
 			angle = Quaternion.Angle(Quaternion.identity, rotation);
 		}

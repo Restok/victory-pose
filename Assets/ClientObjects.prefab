@@ -1,5 +1,208 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &289741364939649208
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5416251481519870119}
+  - component: {fileID: 7440066244721072809}
+  m_Layer: 0
+  m_Name: PuppetBehaviour
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5416251481519870119
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289741364939649208}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3308319315560755032}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7440066244721072809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289741364939649208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1efacf79ab4214e85aeebfd07064c20f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puppetMaster: {fileID: 0}
+  deactivated: 0
+  masterProps:
+    normalMode: 0
+    mappingBlendSpeed: 10
+    activateOnStaticCollisions: 0
+    activateOnImpulse: 0
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 16
+  collisionLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  collisionThreshold: 5
+  collisionResistance:
+    mode: 0
+    floatValue: 300
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    tooltip: Smaller value means more unpinning from collisions so the characters
+      get knocked out more easily. If using a curve, the value will be evaluated
+      by each muscle's target velocity magnitude. This can be used to make collision
+      resistance higher while the character moves or animates faster.
+  collisionResistanceMultipliers: []
+  maxCollisions: 30
+  regainPinSpeed: 4.53
+  boostFalloff: 1
+  defaults:
+    unpinParents: 0.855
+    unpinChildren: 0.862
+    unpinGroup: 0.337
+    minMappingWeight: 0
+    maxMappingWeight: 1
+    minPinWeight: 0
+    disableColliders: 0
+    regainPinSpeed: 1
+    collisionResistance: 0.6
+    knockOutDistance: 1000
+    puppetMaterial: {fileID: 13400000, guid: a3fd0ffcf0d0a384ba3568687a96ab8e, type: 2}
+    unpinnedMaterial: {fileID: 13400000, guid: d4563de398e2c4412a95f4317ddf4b1a, type: 2}
+  groupOverrides:
+  - name: Head
+    groups: 02000000
+    props:
+      unpinParents: 0.9
+      unpinChildren: 0
+      unpinGroup: 0
+      minMappingWeight: 0
+      maxMappingWeight: 1
+      minPinWeight: 0
+      disableColliders: 0
+      regainPinSpeed: 1
+      collisionResistance: 2
+      knockOutDistance: 0.3
+      puppetMaterial: {fileID: 0}
+      unpinnedMaterial: {fileID: 0}
+  - name: Arm, Hand, Prop
+    groups: 030000000400000008000000
+    props:
+      unpinParents: 0.5
+      unpinChildren: 1
+      unpinGroup: 0
+      minMappingWeight: 0
+      maxMappingWeight: 1
+      minPinWeight: 0
+      disableColliders: 0
+      regainPinSpeed: 1
+      collisionResistance: 2
+      knockOutDistance: 100
+      puppetMaterial: {fileID: 0}
+      unpinnedMaterial: {fileID: 0}
+  - name: Hips, Leg
+    groups: 0000000005000000
+    props:
+      unpinParents: 0.2
+      unpinChildren: 0.2
+      unpinGroup: 0
+      minMappingWeight: 0
+      maxMappingWeight: 1
+      minPinWeight: 0
+      disableColliders: 0
+      regainPinSpeed: 1
+      collisionResistance: 2
+      knockOutDistance: 0.3
+      puppetMaterial: {fileID: 0}
+      unpinnedMaterial: {fileID: 0}
+  - name: Foot
+    groups: 06000000
+    props:
+      unpinParents: 0.2
+      unpinChildren: 0
+      unpinGroup: 0
+      minMappingWeight: 0
+      maxMappingWeight: 1
+      minPinWeight: 0
+      disableColliders: 0
+      regainPinSpeed: 2
+      collisionResistance: 2
+      knockOutDistance: 0.4
+      puppetMaterial: {fileID: 0}
+      unpinnedMaterial: {fileID: 0}
+  knockOutDistance: 10
+  unpinnedMuscleWeightMlp: 0.647
+  maxRigidbodyVelocity: 10
+  pinWeightThreshold: 1
+  unpinnedMuscleKnockout: 1
+  dropProps: 0
+  canGetUp: 1
+  getUpDelay: 0.38
+  blendToAnimationTime: 0.3
+  maxGetUpVelocity: 0.4
+  minGetUpDuration: 2
+  getUpCollisionResistanceMlp: 2
+  getUpRegainPinSpeedMlp: 1
+  getUpKnockOutDistanceMlp: 1
+  getUpOffsetProne: {x: 0, y: 0, z: 0}
+  getUpOffsetSupine: {x: 0, y: 0, z: 0}
+  isQuadruped: 0
+  onGetUpProne:
+    switchToBehaviour: 
+    animations: []
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  onGetUpSupine:
+    switchToBehaviour: 
+    animations: []
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  onLoseBalance:
+    switchToBehaviour: 
+    animations: []
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  onLoseBalanceFromPuppet:
+    switchToBehaviour: 
+    animations: []
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  onLoseBalanceFromGetUp:
+    switchToBehaviour: 
+    animations: []
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  onRegainBalance:
+    switchToBehaviour: 
+    animations: []
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  canMoveTarget: 1
 --- !u!1 &2389418203125789965
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,7 +746,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2412895683913671023}
   serializedVersion: 2
-  m_Mass: 0.495
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -1527,7 +1730,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3308319315240850931}
   serializedVersion: 2
-  m_Mass: 0.49500003
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -1938,7 +2141,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5416251481519870119}
   m_Father: {fileID: 3308319315847631626}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
