@@ -12,7 +12,7 @@ public class PlayerMovementController : NetworkBehaviour
     private Vector2 nosePos;
     private Animator anim;
     private Vector3 movementVelocity = new Vector3();
-    private CharacterController characterController;
+    [SerializeField] private CharacterController characterController;
     private Vector3 forward;
     private Vector3 right;
     private NormalizedLandmark headPos;
@@ -56,7 +56,6 @@ public class PlayerMovementController : NetworkBehaviour
 
     }
     private void Start(){
-        characterController = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
     }
     public override void OnNetworkSpawn(){
