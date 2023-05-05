@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: a3422ad278cd9a94aa3da8e6bff9deea
 ModelImporter:
-  serializedVersion: 20200
+  serializedVersion: 21300
   internalIDToNameTable:
   - first:
       1: 100000
@@ -440,6 +440,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -479,12 +480,84 @@ ModelImporter:
       keepOriginalPositionXZ: 1
       heightFromFeet: 0
       mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      bodyMask: 01000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000
       curves: []
       events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
+      transformMask:
+      - path: 
+        weight: 1
+      - path: BodyMesh
+        weight: 1
+      - path: metarig
+        weight: 1
+      - path: metarig/spine
+        weight: 1
+      - path: metarig/spine/spine.001
+        weight: 1
+      - path: metarig/spine/spine.001/spine.002
+        weight: 1
+      - path: metarig/spine/spine.001/spine.002/spine.003
+        weight: 1
+      - path: metarig/spine/spine.001/spine.002/spine.003/shoulder.L
+        weight: 1
+      - path: metarig/spine/spine.001/spine.002/spine.003/shoulder.L/upper_arm.L
+        weight: 1
+      - path: metarig/spine/spine.001/spine.002/spine.003/shoulder.L/upper_arm.L/forearm.L
+        weight: 1
+      - path: metarig/spine/spine.001/spine.002/spine.003/shoulder.L/upper_arm.L/forearm.L/hand.L
+        weight: 1
+      - path: metarig/spine/spine.001/spine.002/spine.003/shoulder.L/upper_arm.L/forearm.L/hand.L/hand.L_end
+        weight: 1
+      - path: metarig/spine/spine.001/spine.002/spine.003/shoulder.R
+        weight: 1
+      - path: metarig/spine/spine.001/spine.002/spine.003/shoulder.R/upper_arm.R
+        weight: 1
+      - path: metarig/spine/spine.001/spine.002/spine.003/shoulder.R/upper_arm.R/forearm.R
+        weight: 1
+      - path: metarig/spine/spine.001/spine.002/spine.003/shoulder.R/upper_arm.R/forearm.R/hand.R
+        weight: 1
+      - path: metarig/spine/spine.001/spine.002/spine.003/shoulder.R/upper_arm.R/forearm.R/hand.R/hand.R_end
+        weight: 1
+      - path: metarig/spine/spine.001/spine.002/spine.003/spine.004
+        weight: 1
+      - path: metarig/spine/spine.001/spine.002/spine.003/spine.004/spine.006
+        weight: 1
+      - path: metarig/spine/spine.001/spine.002/spine.003/spine.004/spine.006/Eyebrow
+        weight: 1
+      - path: metarig/spine/spine.001/spine.002/spine.003/spine.004/spine.006/Eyes
+        weight: 1
+      - path: metarig/spine/spine.001/spine.002/spine.003/spine.004/spine.006/spine.006_end
+        weight: 1
+      - path: metarig/spine/thigh.L
+        weight: 1
+      - path: metarig/spine/thigh.L/shin.L
+        weight: 1
+      - path: metarig/spine/thigh.L/shin.L/foot.L
+        weight: 1
+      - path: metarig/spine/thigh.L/shin.L/foot.L/heel.02.L
+        weight: 1
+      - path: metarig/spine/thigh.L/shin.L/foot.L/heel.02.L/heel.02.L_end
+        weight: 1
+      - path: metarig/spine/thigh.L/shin.L/foot.L/toe.L
+        weight: 1
+      - path: metarig/spine/thigh.L/shin.L/foot.L/toe.L/toe.L_end
+        weight: 1
+      - path: metarig/spine/thigh.R
+        weight: 1
+      - path: metarig/spine/thigh.R/shin.R
+        weight: 1
+      - path: metarig/spine/thigh.R/shin.R/foot.R
+        weight: 1
+      - path: metarig/spine/thigh.R/shin.R/foot.R/heel.02.R
+        weight: 1
+      - path: metarig/spine/thigh.R/shin.R/foot.R/heel.02.R/heel.02.R_end
+        weight: 1
+      - path: metarig/spine/thigh.R/shin.R/foot.R/toe.R
+        weight: 1
+      - path: metarig/spine/thigh.R/shin.R/foot.R/toe.R/toe.R_end
+        weight: 1
+      maskType: 1
+      maskSource: {fileID: 31900000, guid: 57d381e72cc71b647af953cae985fad1, type: 2}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: BasicMotions@Idle01 - Idle02
@@ -527,6 +600,7 @@ ModelImporter:
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -538,6 +612,7 @@ ModelImporter:
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -1329,6 +1404,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

@@ -12,7 +12,7 @@ namespace Mediapipe.Unity.PoseTracking
   public class PoseTrackingSolution : ImageSourceSolution<PoseTrackingGraph>
   {
     [SerializeField] private PoseLandmarkListAnnotationController _poseLandmarksAnnotationController;
-    public PlayerMovementController PlayerMovementController;
+    public PlayerMovementControllerRB PlayerMovementController;
 
     public PoseTrackingGraph.ModelComplexity modelComplexity
     {

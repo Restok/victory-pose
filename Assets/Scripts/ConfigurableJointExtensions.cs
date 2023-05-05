@@ -60,15 +60,15 @@ public static class ConfigurableJointExtensions
 		joint.xMotion = ConfigurableJointMotion.Locked;
 		joint.yMotion = ConfigurableJointMotion.Locked;
 		joint.zMotion = ConfigurableJointMotion.Locked;
-		joint.angularXMotion = ConfigurableJointMotion.Limited;
-		joint.angularYMotion = ConfigurableJointMotion.Limited;
-		joint.angularZMotion = ConfigurableJointMotion.Limited;
+		// joint.angularXMotion = ConfigurableJointMotion.Limited;
+		// joint.angularYMotion = ConfigurableJointMotion.Limited;
+		// joint.angularZMotion = ConfigurableJointMotion.Limited;
 		joint.breakForce = Mathf.Infinity;
 		joint.breakTorque = Mathf.Infinity;
 		
 		joint.rotationDriveMode = RotationDriveMode.Slerp;
 		var slerpDrive = joint.slerpDrive;
-		slerpDrive.positionSpring = 1500;
+		slerpDrive.positionSpring = 3000;
 		slerpDrive.positionDamper = 50;
 		slerpDrive.maximumForce = Mathf.Infinity;
 		joint.slerpDrive = slerpDrive;

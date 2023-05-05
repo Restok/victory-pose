@@ -63,7 +63,7 @@ public class PlayerMovementController : NetworkBehaviour
         if (IsClient && IsOwner) {
             _cinemachineVirtualCamera.Follow = transform;
             _cinemachineVirtualCamera.LookAt = playerHead;
-            _poseTrackingSolution.PlayerMovementController = GetComponent<PlayerMovementController>();
+            //_poseTrackingSolution.PlayerMovementController = GetComponent<PlayerMovementController>();
             _poseTrackingSolution.enabled = true;
         }
     }
@@ -94,16 +94,16 @@ public class PlayerMovementController : NetworkBehaviour
     private void setLocomotionState() {
         int movingForward = 0;
         int movingRight = 0;
-        if(headPos.Y > .75f) {
+        if(headPos.Y > .6f) {
             movingForward = -1;
         }
-        else if (headPos.Y < 0.3f) {
+        else if (headPos.Y < 0.4f) {
             movingForward = 1;
         }
-        if(headPos.X > 0.7f) {
+        if(headPos.X > 0.6f) {
             movingRight = -1;
         }
-        else if(headPos.X < 0.3f){
+        else if(headPos.X < 0.4f){
             movingRight = 1;
         }
 
@@ -116,12 +116,15 @@ public class PlayerMovementController : NetworkBehaviour
         right = transform.right;
         float forwardVelocity = movingForward * multiplier;
         float rightVelocity = movingRight * multiplier;
-        anim.SetFloat("LeftRightVelocity", rightVelocity);
-        anim.SetFloat("ForwardBackwardVelocity", forwardVelocity);
+
         currentVelocity.targetValue = maxVelocity;
+
         movementVelocity = Vector3.Normalize(forwardVelocity * forward + right*rightVelocity);        
         movementVelocity *= currentVelocity.currentValue;
+        anim.SetFloat("LeftRightVelocity", Vector3.Project(movementVelocity, right).magnitude);
+        anim.SetFloat("ForwardBackwardVelocity", Vector3.Project(movementVelocity, forward).magnitude);
         movePlayerServerRPC(movementVelocity);
+        
     }
     
     private void setArmState(){
@@ -143,6 +146,7 @@ public class PlayerMovementController : NetworkBehaviour
     [ServerRpc]
     private void movePlayerServerRPC(Vector3 movementVelocity){
         characterController.SimpleMove(movementVelocity);
+        
     }
     [ServerRpc]
     private void movePlayerArmServerRPC(Vector3 left, Vector3 right){

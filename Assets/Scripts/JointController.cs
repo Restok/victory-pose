@@ -5,6 +5,10 @@ using UnityEngine;
 public class JointController : MonoBehaviour
 {
     // Start is called before the first frame update
+    [SerializeField] private Rigidbody upComponent;
+    [SerializeField] private Rigidbody[] downComponents;
+    [SerializeField] private float upforceMultiplier=200f;
+    [SerializeField] private float downForceMultiplier=100f;
     private ConfigurableJoint[] playerJoints;
     private Quaternion[] initialJointsRotation;
 
@@ -14,6 +18,7 @@ public class JointController : MonoBehaviour
     public PhysicMaterial zeroFrictionMat;
     void Start()
     {
+
         allColliders = GetComponentsInChildren<Collider>();
         
         playerJoints = GetComponentsInChildren<ConfigurableJoint>();
@@ -30,6 +35,7 @@ public class JointController : MonoBehaviour
         for(int i = 0; i<playerJoints.Length; i++){
             animatedTransforms[i] = RecursiveFindChild(animatedRoot, playerJoints[i].name);
         }
+
     }
     private void UpdateJointAngles(){
         if(playerJoints!=null){
@@ -43,6 +49,11 @@ public class JointController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        upComponent.AddForce(Vector3.up*upforceMultiplier, ForceMode.Force);
+        foreach(Rigidbody r in downComponents){
+            r.AddForce(Vector3.down*downForceMultiplier, ForceMode.Force);
+        }
         UpdateJointAngles();
     }
     Transform RecursiveFindChild(Transform parent, string childName)
