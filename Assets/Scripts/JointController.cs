@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class JointController : MonoBehaviour
@@ -56,6 +57,7 @@ public class JointController : MonoBehaviour
         }
         UpdateJointAngles();
     }
+
     Transform RecursiveFindChild(Transform parent, string childName)
     {
         foreach (Transform child in parent)

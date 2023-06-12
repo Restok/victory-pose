@@ -14,7 +14,6 @@ public class PlayerMovementControllerRB : NetworkBehaviour
 
     private Vector2 nosePos;
     private Animator anim;
-    private Vector3 movementVelocity = new Vector3();
     private Vector3 forward;
     private Vector3 right;
     private NormalizedLandmark headPos;
@@ -100,8 +99,6 @@ public class PlayerMovementControllerRB : NetworkBehaviour
         if(!IsOwner) {
             return;
         }
-        interpolatingVelocity.UpdateVariable();
-
         if(headPos!= null){
             setLocomotionState();
         }
@@ -124,23 +121,9 @@ public class PlayerMovementControllerRB : NetworkBehaviour
         else if(headPos.X < 0.3f){
             movingRight = 1;
         }
+        movePlayerServerRPC(movingForward, movingRight);
 
-        int numDirections = Math.Abs(movingForward) + Math.Abs(movingRight);
-        float multiplier = maxVelocity;
-        if(numDirections == 2) {
-            multiplier = (float) Math.Sqrt(maxVelocity);
-        }
-        forward = transform.forward;
-        right = transform.right;
-        float forwardVelocity = movingForward * multiplier;
-        float rightVelocity = movingRight * multiplier;
-        movementVelocity = forwardVelocity * forward + right*rightVelocity;
-        interpolatingVelocity.targetValue = movementVelocity;        
-        anim.SetFloat("LeftRightVelocity", Vector3.Dot(interpolatingVelocity.currentValue, right));
-        anim.SetFloat("ForwardBackwardVelocity", Vector3.Dot(interpolatingVelocity.currentValue, forward));
-        Vector3 rbVelocity = playerHip.velocity;
-        Vector3 velocityDiff = interpolatingVelocity.currentValue - rbVelocity;
-        movePlayerServerRPC(velocityDiff);
+        
     }
     
     private void setArmState(){
@@ -160,8 +143,27 @@ public class PlayerMovementControllerRB : NetworkBehaviour
         return new Vector3(handX, handY, handZ);    
     }
     [ServerRpc]
-    private void movePlayerServerRPC(Vector3 movementVelocity){
-        playerHip.AddForce(movementVelocity, ForceMode.VelocityChange);
+    private void movePlayerServerRPC(int movingForward, int movingRight){
+        interpolatingVelocity.UpdateVariable();
+        int numDirections = Math.Abs(movingForward) + Math.Abs(movingRight);
+        float multiplier = maxVelocity;
+        if(numDirections == 2) {
+            multiplier = (float) Math.Sqrt(maxVelocity);
+        }
+        forward = transform.forward;
+        right = transform.right;
+        float forwardVelocity = movingForward * multiplier;
+        float rightVelocity = movingRight * multiplier;
+        Vector3 movementVelocity = forwardVelocity * forward + right*rightVelocity;
+        float lrVelocity = Vector3.Dot(interpolatingVelocity.currentValue, right);
+        float fbVelocity =  Vector3.Dot(interpolatingVelocity.currentValue, forward);
+
+        interpolatingVelocity.targetValue = movementVelocity;
+        Vector3 rbVelocity = playerHip.velocity;
+        Vector3 velocityDiff = interpolatingVelocity.currentValue - rbVelocity;
+        anim.SetFloat("LeftRightVelocity", lrVelocity);
+        anim.SetFloat("ForwardBackwardVelocity", fbVelocity);
+        playerHip.AddForce(velocityDiff, ForceMode.VelocityChange);
     }
     [ServerRpc]
     private void movePlayerArmServerRPC(Vector3 left, Vector3 right){
