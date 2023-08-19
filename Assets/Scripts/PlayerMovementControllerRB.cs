@@ -9,7 +9,7 @@ public class PlayerMovementControllerRB : NetworkBehaviour
 {
     [SerializeField] private Rigidbody playerHip;
 
-    [SerializeField] private float maxVelocity = 2.5f;
+    private float maxVelocity = 5f;
     private InterpolatingVector3 interpolatingVelocity = new InterpolatingVector3(new Vector3(0,0,0),new Vector3(0,0,0), 0.2f);
 
     private Vector2 nosePos;
